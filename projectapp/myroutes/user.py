@@ -18,7 +18,6 @@ from projectapp.mymodel import User, Register, Tasks
 def hello():
     return app.send_static_file('index.html')
 
-
 @app.route("/token", methods=["POST"])
 def create_token():
     email = request.json.get("email", None)
