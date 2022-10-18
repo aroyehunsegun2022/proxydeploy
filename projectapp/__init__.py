@@ -10,8 +10,7 @@ from flask_migrate import Migrate
 from flask_jwt_extended import create_access_token,jwt_required,get_jwt_identity, JWTManager
 
 
-app=Flask(__name__,instance_relative_config=True )
-
+app=Flask(__name__,instance_relative_config=True, static_folder="../build", static_url_path="/")
 
 
 csrf = CSRFProtect()  #or use this method csrf.init_app(app)

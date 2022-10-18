@@ -16,7 +16,7 @@ from projectapp.mymodel import User, Register, Tasks
 
 @app.route('/')
 def hello():
-    return "Hello World"
+    return app.send_static_file('index.html')
 
 
 @app.route("/token", methods=["POST"])
