@@ -5,7 +5,13 @@ import Delete from '../../Media/delete.png'
 import Edit from '../../Media/edit.png'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Locations } from './location';
+
+
+import PlacesAutocomplete, {
+  geocodeByAddress,
+  geocodeByPlaceId,
+  getLatLng,
+} from 'react-places-autocomplete';
 
 
 function Tasks() {
@@ -151,15 +157,19 @@ function Tasks() {
     }
 
 
-    const [data, setData] = React.useState([]);
-    const [name, setName] = React.useState("");
-    
-    const filtered = Locations.filter((dt) =>
-      dt.name.toLowerCase().includes(name.toLowerCase())
-    );
-    React.useEffect(() => {
-      //
-    }, []);
+    const[address, setAddress] = useState(" ")
+    const [coordinates, setCoordinates] = useState({
+      lat: null,
+      lng: null
+    })
+
+    const handleSelect = async value => {
+      const results = await geocodeByAddress(value);
+      const latAndLong = await getLatLng(results[0])
+      console.log(latAndLong)
+      setAddress(value)
+      setCoordinates(latAndLong)
+    }
 
 
     return (
@@ -240,18 +250,55 @@ function Tasks() {
                   </div>
                   <div className="form-group">
                     <label>Task Location</label>
-                    <input
-                      type="text"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                    />
-                    {name.length !== 0 && (
-                      <div>
-                        {filtered.slice(0, 3).map((dt) => {
-                          return <p key={dt.id}>{dt.name}</p>;
-                        })}
-                      </div>
-                    )}
+                    <PlacesAutocomplete
+                      value={address}
+                      onChange={setAddress}
+                      onSelect={handleSelect}
+                    >
+                      {({
+                        getInputProps,
+                        suggestions,
+                        getSuggestionItemProps,
+                        loading,
+                      }) => (
+                        <div key={suggestions.description}>
+                          <input
+                            {...getInputProps({
+                              placeholder: "Search Location ...",
+                              className: "location-search-input",
+                            })}
+                          />
+                          <div className="autocomplete-dropdown-container">
+                            {loading && <div>Loading...</div>}
+                            {suggestions.map((suggestion) => {
+                              const className = suggestion.active
+                                ? "suggestion-item--active"
+                                : "suggestion-item";
+                              // inline style for demonstration purpose
+                              const style = suggestion.active
+                                ? {
+                                    backgroundColor: "#fafafa",
+                                    cursor: "pointer",
+                                  }
+                                : {
+                                    backgroundColor: "#ffffff",
+                                    cursor: "pointer",
+                                  };
+                              return (
+                                <div
+                                  {...getSuggestionItemProps(suggestion, {
+                                    className,
+                                    style,
+                                  })}
+                                >
+                                  <span>{suggestion.description}</span>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
+                    </PlacesAutocomplete>
                   </div>
                   <div className="form-group">
                     <label>Task Assigned By</label>
