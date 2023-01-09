@@ -85,7 +85,7 @@ def register():
    
         
 
-    
+# user
 @app.route('/dashboard')
 def dashboard():
     if 'email' not in session:
@@ -108,6 +108,7 @@ def user():
     user = User.query.filter_by(email=session['email']).first()
     return render_template('user.html',name=user.email)
 
+# admin privilege
 @app.route('/user/<id>')
 def user_id(id):
     if 'email' not in session:
@@ -115,14 +116,14 @@ def user_id(id):
     user = User.query.filter_by(email=session['email']).first()
     return render_template('user.html',name=user.email)
 
-
+# admin privilege
 @app.route('/user/<id>/delete')
 def user_id_delete(id):
     if 'email' not in session:
         return redirect(url_for('login'))
     user = User.query.filter_by(email=session['email']).first()
     return render_template('user.html',name=user.email)
-
+# user privilege
 @app.route('/user/<id>/update')
 def user_id_update(id):
     if 'email' not in session:
