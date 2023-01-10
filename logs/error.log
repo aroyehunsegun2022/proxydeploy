@@ -1,6 +1,2 @@
-WARNING 2023-01-09 13:20:51,156 django.request Thread-5 (process_request_thread) 6472 log log.py 241 django.request log_response 16140 Unauthorized: /api/v1/auth/logout/
-WARNING 2023-01-09 13:20:51,158 django.server Thread-5 (process_request_thread) 6472 basehttp basehttp.py 187 django.server log_message 16140 "GET /api/v1/auth/logout/ HTTP/1.1" 401 3882
-WARNING 2023-01-09 14:14:59,316 django.request Thread-1 (process_request_thread) 5552 log log.py 241 django.request log_response 18096 Forbidden: /api/v1/auth/login/
-WARNING 2023-01-09 14:14:59,329 django.server Thread-1 (process_request_thread) 5552 basehttp basehttp.py 187 django.server log_message 18096 "POST /api/v1/auth/login/ HTTP/1.1" 403 38
-WARNING 2023-01-09 14:16:15,153 django.request Thread-1 (process_request_thread) 5552 log log.py 241 django.request log_response 18096 Not Found: /accounts/login/
-WARNING 2023-01-09 14:16:15,162 django.server Thread-1 (process_request_thread) 5552 basehttp basehttp.py 187 django.server log_message 18096 "GET /accounts/login/?next=/ HTTP/1.1" 404 2502
+WARNING 2023-01-10 20:31:45,907 django.request Thread-3 (process_request_thread) 1640 log log.py 241 django.request log_response 16412 Unauthorized: /api/v1/users/admin/user/12/
+WARNING 2023-01-10 20:31:45,912 django.server Thread-3 (process_request_thread) 1640 basehttp basehttp.py 187 django.server log_message 16412 "GET /api/v1/users/admin/user/12/ HTTP/1.1" 401 5310

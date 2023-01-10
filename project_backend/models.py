@@ -45,6 +45,10 @@ class User(HelperModel,AbstractBaseUser,PermissionsMixin):
     user-compliant permissions.
     Email and password are required. Other fields are optional.
     """
+    type = (
+        ('Proxy', 'Proxy'),
+        ('Principal', 'Principal')
+    )
     first_name = models.CharField(_("first name"), max_length=150, blank=False, null=False)
     last_name = models.CharField(_("last name"), max_length=150, blank=False, null=False)
     email = models.EmailField(_("email address"), blank=False, null=False, unique=True)
@@ -53,6 +57,7 @@ class User(HelperModel,AbstractBaseUser,PermissionsMixin):
     city = models.CharField(_("City"), max_length=250, blank=False, null=False)
     lga = models.CharField(_("LGA"), max_length=250, blank=False, null=False)
     state = models.CharField(_("State"), max_length=250, blank=False, null=False)
+    user_type = models.CharField(max_length=50,choices=type, default='')
     is_verified = models.BooleanField(
         _("Verified Status"),
         default=False,
@@ -76,7 +81,7 @@ class User(HelperModel,AbstractBaseUser,PermissionsMixin):
 
     EMAIL_FIELD = "email"
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["first_name","last_name"]
+    REQUIRED_FIELDS = ["first_name","last_name","user_type"]
     
     def __str__(self):
         return f'{self.first_name}'

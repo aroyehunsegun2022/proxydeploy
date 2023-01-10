@@ -10,8 +10,8 @@ class UserAdmin(admin.ModelAdmin):
         'email',
         'phoneNumber',
         'city',
+        'user_type',
         'is_verified',
-        'is_staff',
         'is_active',
         'created_at'
     )

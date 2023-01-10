@@ -101,6 +101,7 @@ def profile():
     user = User.query.filter_by(email=session['email']).first()
     return render_template('profile.html',name=user.email)
 
+# admin
 @app.route('/user')
 def user():
     if 'email' not in session:
@@ -123,6 +124,7 @@ def user_id_delete(id):
         return redirect(url_for('login'))
     user = User.query.filter_by(email=session['email']).first()
     return render_template('user.html',name=user.email)
+
 # user privilege
 @app.route('/user/<id>/update')
 def user_id_update(id):
