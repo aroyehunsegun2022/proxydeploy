@@ -25,16 +25,24 @@ class VerifyEmailSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.User
         fields = ['token']
-        
+
 class LoginSerializer(serializers.ModelSerializer):
     
     email = serializers.EmailField(max_length=255)
     password = serializers.CharField(min_length=6, write_only=True)
     tokens = serializers.CharField(read_only=True, max_length=200)
+    user_access = serializers.SerializerMethodField(read_only=True)
     
     class Meta:
         model = models.User
-        fields = ['email','password', 'tokens']
+        fields = ['email','user_access','password','tokens']
+        
+    def get_user_access(self, obj):
+        try:
+            access_type = models.User.objects.get(email=obj['email']).user_type
+        except:
+            access_type = None
+        return access_type
     
     def validate(self, attrs):
         email = attrs.get('email', None)
